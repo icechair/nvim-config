@@ -28,6 +28,7 @@ return {
             ensure_installed = {
                 "lua_ls",
                 "rust_analyzer",
+                "clangd",
                 "tsserver",
             },
             handlers = {
@@ -39,7 +40,7 @@ return {
 
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
-                    lspconfig.lua_ls.setup {
+                    lspconfig.lua_ls.setup ({
                         capabilities = capabilities,
                         settings = {
                             Lua = {
@@ -48,37 +49,46 @@ return {
                                 }
                             }
                         }
+                    })
+                end,
+                ["tsserver"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.tsserver.setup({
+                        capabilities = capabilities,
+                        on_attach = function(client)
+                            client.resolved_capabilities.document_formatting = false
+                        end
+                    })
+                end,
+                ["clangd"] = function()
+                    local lspconfig = require("lspconfig")
+                    local util = require('lspconfig.util')
+                    -- changed priority so it finds the right root
+                    local root_files = {
+                        'compile-commands.json',
+                        'compile_flags.txt',
+                        'configure.ac',
+                        '.git',
+                        '.svn',
+                        '.clangd',
+                        '.clang-tidy',
+                        '.clang-format',
                     }
+                    lspconfig.clangd.setup ({
+                        capabilities = capabilities,
+                        single_file_support = false,
+                        root_dir = function(fname)
+                            --                    print("im looking for root_dir for " .. fname)
+                            local pattern = util.root_pattern(unpack(root_files))(fname)
+                            --                    print("i found this pattern: " .. pattern)
+                            return pattern
+                            -- return  util.root_pattern(unpack(root_files))(fname) or vim.fn.getcwd()
+                        end,
+
+                    })
                 end,
             }
         })
-        local function configure_clangd()
-            local lspconfig = require("lspconfig")
-            local util = require('lspconfig.util')
-            local root_files = {
-                'compile-commands.json',
-                'compile_flags.txt',
-                'configure.ac',
-                '.git',
-                '.svn',
-                '.clangd',
-                '.clang-tidy',
-                '.clang-format',
-            }
-            lspconfig.clangd.setup {
-                capabilities = capabilities,
-                single_file_support = false,
-                root_dir = function(fname)
---                    print("im looking for root_dir for " .. fname)
-                    local pattern = util.root_pattern(unpack(root_files))(fname)
---                    print("i found this pattern: " .. pattern)
-                    return pattern
-                    -- return  util.root_pattern(unpack(root_files))(fname) or vim.fn.getcwd()
-                end,
-
-            }
-        end
-        configure_clangd()
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
