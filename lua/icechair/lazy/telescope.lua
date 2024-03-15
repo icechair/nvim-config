@@ -23,7 +23,7 @@ return {
         end, { desc = "search for phrase" })
         vim.keymap.set('n', '<leader>ps', function()
             builtin.grep_string({ search = vim.fn.input("Grep > ") })
-        end, "grep in files")
+        end, { desc = "grep in files" })
         vim.keymap.set('n', '<leader>vh', builtin.help_tags, { desc = "search in help?" })
     end
 }

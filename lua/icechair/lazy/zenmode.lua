@@ -29,6 +29,6 @@ return {
             vim.wo.rnu = false
             vim.opt.colorcolumn = "0"
             ColorMyPencils()
-        end, "toggle zenmode(no line num)")
+        end, { desc = "toggle zenmode(no line num)" })
     end
 }

@@ -13,7 +13,7 @@ return
                 { desc = "document diagnostics" })
             vim.keymap.set("n", "<leader>xq", function() trouble.toggle("quickfix") end, { desc = "quickfix" })
             vim.keymap.set("n", "<leader>xl", function() trouble.toggle("loclist") end, { desc = "loc list" })
-            vim.keymap.set("n", "gR", function() trouble.toggle("lsp_references") end, { gesc = "lsp refs" })
+            vim.keymap.set("n", "gR", function() trouble.toggle("lsp_references") end, { desc = "lsp refs" })
         end,
     }
 }
