@@ -40,7 +40,7 @@ return {
 
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
-                    lspconfig.lua_ls.setup ({
+                    lspconfig.lua_ls.setup({
                         capabilities = capabilities,
                         settings = {
                             Lua = {
@@ -74,7 +74,7 @@ return {
                         '.clang-tidy',
                         '.clang-format',
                     }
-                    lspconfig.clangd.setup ({
+                    lspconfig.clangd.setup({
                         capabilities = capabilities,
                         single_file_support = false,
                         root_dir = function(fname)

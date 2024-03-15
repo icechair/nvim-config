@@ -5,7 +5,7 @@ return {
             require("zen-mode").setup {
                 window = {
                     width = 90,
-                    options = { }
+                    options = {}
                 },
             }
             require("zen-mode").toggle()
@@ -13,14 +13,14 @@ return {
             vim.wo.number = true
             vim.wo.rnu = true
             ColorMyPencils()
-        end)
+        end, { desc = "toggle zenmode" })
 
 
         vim.keymap.set("n", "<leader>zZ", function()
             require("zen-mode").setup {
                 window = {
                     width = 80,
-                    options = { }
+                    options = {}
                 },
             }
             require("zen-mode").toggle()
@@ -29,7 +29,6 @@ return {
             vim.wo.rnu = false
             vim.opt.colorcolumn = "0"
             ColorMyPencils()
-        end)
+        end, "toggle zenmode(no line num)")
     end
 }
-
