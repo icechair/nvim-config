@@ -30,6 +30,7 @@ return {
                 "rust_analyzer",
                 "clangd",
                 "tsserver",
+                "pyright",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -56,6 +57,9 @@ return {
                     lspconfig.tsserver.setup({
                         capabilities = capabilities,
                         on_attach = function(client)
+                            if client.resolved_capabilities == nil then
+                                return
+                            end
                             client.resolved_capabilities.document_formatting = false
                         end
                     })
@@ -85,6 +89,12 @@ return {
                             -- return  util.root_pattern(unpack(root_files))(fname) or vim.fn.getcwd()
                         end,
 
+                    })
+                end,
+                ["pyright"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.pyright.setup({
+                        capabilities = capabilities,
                     })
                 end,
             }
