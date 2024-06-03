@@ -1,0 +1,28 @@
+return {
+  'Exafunction/codeium.nvim',
+  cmd = 'Codeium',
+  build = ':Codeium Auth',
+  event = 'InsertEnter',
+  dependencies = {
+    'hrsh7th/nvim-cmp',
+  },
+  opts = {},
+  config = function()
+    -- Change '<C-g>' here to any keycode you like.
+    vim.keymap.set('i', '<C-g>cy', function()
+      return vim.fn['codeium#Accept']()
+    end, { expr = true, silent = true, desc = 'codeium acceppt suggestion' })
+    vim.keymap.set('i', '<C-;>', function()
+      return vim.fn['codeium#CycleCompletions'](1)
+    end, { expr = true, silent = true, desc = 'codeium next suggestion' })
+    vim.keymap.set('i', '<C-,>', function()
+      return vim.fn['codeium#CycleCompletions'](-1)
+    end, { expr = true, silent = true, desc = 'codeium prev suggestion' })
+    vim.keymap.set('i', '<C-x>', function()
+      return vim.fn['codeium#Clear']()
+    end, { expr = true, silent = true, desc = 'codeium clear suggestion' })
+    vim.keymap.set('i', '<C-t>', function()
+      return vim.fn['codeium#Complete']()
+    end, { expr = true, silent = true, desc = 'codeium trigger suggestion' })
+  end,
+}

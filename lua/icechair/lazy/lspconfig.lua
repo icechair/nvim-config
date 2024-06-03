@@ -171,6 +171,9 @@ return {
           document_formatting = false,
         },
       },
+      cmake = {
+        filetypes = { 'cmake', 'CMakeLists.txt' },
+      },
 
       lua_ls = {
         -- cmd = {...},
