@@ -10,6 +10,7 @@
 --
 -- NOTE: Here is where you install your plugins.
 return {
+  { 'andrewradev/linediff.vim' },
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 

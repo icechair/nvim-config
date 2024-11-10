@@ -18,7 +18,7 @@ vim.opt.relativenumber = true
 vim.opt.mouse = 'a'
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
-
+vim.opt.tabstop = 4
 -- Sync clipboard between OS and Neovim.
 -- vim.opt.clipboard = 'unnamedplus'
 -- Enable break indent
@@ -61,3 +61,17 @@ vim.opt.scrolloff = 10
 
 -- Set highlight on search,
 vim.opt.hlsearch = true
+
+-- autoreload
+vim.opt.autoread = true
+vim.api.nvim_create_autocmd({
+  'BufEnter',
+  'CursorHold',
+  'CursorHoldI',
+  'FocusGained',
+}, {
+  command = "if mode() != 'c' | checktime | endif",
+})
+
+vim.opt.fileencodings = 'ucs-bom,utf-8,default'
+vim.g.editorconfig = true

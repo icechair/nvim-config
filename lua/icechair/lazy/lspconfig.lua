@@ -159,6 +159,7 @@ return {
       clangd = {},
       pyright = {},
       rust_analyzer = {},
+      gopls = {},
       -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
       --
       -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -168,7 +169,7 @@ return {
       --
       tsserver = {
         capabilities = {
-          document_formatting = false,
+          document_formatting = true,
         },
       },
       cmake = {
@@ -190,6 +191,21 @@ return {
         },
       },
     }
+
+    local lspconfig = require 'lspconfig'
+    lspconfig.gdscript.setup {}
+    local pipepath = vim.fn.stdpath 'cache' .. '/gdscript.pipe'
+    if not vim.loop.fs_stat(pipepath) then
+      vim.fn.serverstart(pipepath)
+    end
+    -- local lspconfig = require 'lspconfig'
+    -- lspconfig.ccls.setup {
+    --  init_options = {
+    --    cache = {
+    --      directory = '.ccls-cache',
+    --    },
+    --  },
+    -- }
 
     -- Ensure the servers and tools above are installed
     --  To check the current status of installed tools and/or manually install
